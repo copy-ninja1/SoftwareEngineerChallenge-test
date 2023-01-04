@@ -4,7 +4,6 @@ dist
 node_modules
 npm-debug.log
 docker-compose
-README.md
 .vs
 .vscode
 .git
