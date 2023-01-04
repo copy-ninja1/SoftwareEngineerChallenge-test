@@ -5,12 +5,12 @@
 ## Description
 
 This is a prove of concept of an Software Engineering Challenge to implement A mini app that allows users to reply messages sent to them on Instagram
-[Meta Api Docs](https://developers.facebook.com/docs/messenger-platform/instagram)
+([Meta Api Docs](https://developers.facebook.com/docs/messenger-platform/instagram))
 
 ## Tech Stack Required
 
-1. Node js
-2. Typescript(Nice to use)
+1. Node js (nestjs)
+2. Typescript
 3. PostgresSQL
 
 ## Installation
