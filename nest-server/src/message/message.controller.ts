@@ -1,0 +1,47 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { MessageService } from './message.service';
+import { CreateMessageDto } from './dto/create-message.dto';
+import { UpdateMessageDto } from './dto/update-message.dto';
+import { AccountPageDto } from 'src/page/dto/account-page.dto';
+import { ApiTags } from '@nestjs/swagger';
+
+@Controller('message')
+@ApiTags('message')
+export class MessageController {
+  constructor(private readonly messageService: MessageService) {}
+
+  @Post()
+  create(@Body() payload: CreateMessageDto) {
+    return this.messageService.create(payload);
+  }
+
+  @Get('/:conversationId')
+  async getMessages(
+    @Param('conversationId') conversationId: string,
+    @Body() payload: AccountPageDto,
+  ) {
+    return await this.messageService.getMessage(conversationId, payload);
+  }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.messageService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateMessageDto: UpdateMessageDto) {
+    return this.messageService.update(+id, updateMessageDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.messageService.remove(+id);
+  }
+}

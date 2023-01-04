@@ -1,0 +1,34 @@
+services:
+  soft-db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+    container_name: postgres-db
+    volumes:
+      - soft:/var/lib/postgresql/data
+
+  soft-api:
+    build:
+      context: .
+      target: development
+
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+    env_file:
+      - .env
+
+    command: npm run start:dev
+    ports:
+      - 3000:3000
+    depends_on:
+      - soft-db
+
+volumes:
+  soft:

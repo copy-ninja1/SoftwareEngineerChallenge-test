@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+
+  dev_mongo_db:
+    image: mongo
+    # restart: always
+    volumes:
+      - dev_mongo_db_data:/data/db
+    ports:
+      - 27017:27017
+    container_name: ${MONGO_HOST}
+    networks:
+      - soft
+
+  api:
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    depends_on:
+      - dev_mongo_db
+    command: npm run dev
+    env_file:
+      - ./.env
+
+volumes:
+  dev_mongo_db_data:
+
+
+networks:
+  soft:
+
+
